@@ -1,25 +1,24 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import { Services } from "./components/Services/Services";
+import "antd/dist/antd.css";
+import styled from "styled-components";
+import { Filters } from "./components/Filters/Filters";
+
+const Container = styled.div`
+  width: 1200px;
+  height: 937px;
+  background: #f5f7fa;
+  margin: auto;
+  overflow: scroll;
+  padding: 32px;
+`;
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Container>
+      <Filters />
+      <Services />
+    </Container>
   );
 }
 
