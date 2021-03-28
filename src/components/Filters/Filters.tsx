@@ -1,7 +1,8 @@
+import { ChangeEvent, useState } from "react";
 import styled from "styled-components";
 
 const FilterInput = styled.input`
-  font-size: 11px;
+  font-size: 15px;
   color: #262626;
   padding: 17px 22px;
   border: 1px solid #cfd2d9;
@@ -11,7 +12,7 @@ const FilterInput = styled.input`
 
   &:focus {
     border: 1px solid #2f80ed;
-    outline: 3px solid red;
+    outline: none;
   }
 `;
 
@@ -32,11 +33,37 @@ const FilterWrapper = styled.div`
   margin-bottom: 24px;
 `;
 
-export const Filters: React.FC = () => {
+const FiltersHeader = styled.div`
+  font-size: 39px;
+  font-weight: 300;
+  margin-bottom: 16px;
+`;
+
+interface Arguments {
+  onEnter: (search: string) => void;
+}
+
+export const Filters: React.FC<Arguments> = ({ onEnter }) => {
+  const [value, setValue] = useState("");
+
+  const onChange = (evt: ChangeEvent<HTMLInputElement>) => {
+    const enteredValue = evt.target.value;
+    onEnter(enteredValue);
+    setValue(enteredValue);
+  };
+
+  const onReset = () => {
+    onEnter("");
+    setValue("");
+  };
+
   return (
-    <FilterWrapper>
-      <FilterInput />
-      <ResetButton children="Reset" />
-    </FilterWrapper>
+    <>
+      <FiltersHeader>Services</FiltersHeader>
+      <FilterWrapper>
+        <FilterInput {...{ value, onChange }} />
+        <ResetButton onClick={onReset} children="Reset" />
+      </FilterWrapper>
+    </>
   );
 };

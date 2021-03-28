@@ -1,26 +1,15 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { useFetching } from "../../hooks/useFetching";
 import { getPromocodes } from "../../server/fetchData";
-import { Service } from "../../types/api";
 
-export default function useGetServices() {
-  const [loading, setLoading] = useState(false);
-  const [services, setServices] = useState<Service[]>([]);
+export default function useGetServices(search?: string) {
+  const { data: services, start } = useFetching({
+    request: getPromocodes,
+  });
 
   useEffect(() => {
-    setLoading(true);
+    start(search);
+  }, [start, search]);
 
-    getPromocodes().then((servicesList) => {
-      setLoading(false);
-      setServices(servicesList);
-    });
-
-    // cause it's a fake request we don't need to put this dependency in a array
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  // TODO: errors
-  return {
-    loading,
-    services,
-  };
+  return { services };
 }
